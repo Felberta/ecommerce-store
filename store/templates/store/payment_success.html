@@ -1,0 +1,11 @@
+{% extends 'store/base.html' %}
+{% block title %}Success{% endblock %}
+
+{% block content %}
+<section class="success">
+  <h2>🎉 Payment Successful!</h2>
+  <p>Thank you for shopping with us, {{ request.user.username }}!</p>
+  <p>Total Paid: ₹{{ total|floatformat:2 }}</p>
+  <a href="{% url 'index' %}" class="btn">Continue Shopping</a>
+</section>
+{% endblock %}

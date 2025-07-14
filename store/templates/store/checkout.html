@@ -1,0 +1,39 @@
+{% extends 'store/base.html' %}
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<section class="checkout">
+  {% if placed %}
+    <h2>🎉 Thank you for your order!</h2>
+    <p>Your order has been successfully placed.</p>
+    <a href="{% url 'index' %}" class="btn">Continue Shopping</a>
+  {% elif items %}
+    <h2>Order Summary</h2>
+    <table>
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+      </tr>
+      {% for item in items %}
+        <tr>
+          <td>{{ item.product.name }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>₹{{ item.product.price|floatformat:2 }}</td>
+        </tr>
+      {% endfor %}
+      <tr>
+        <td colspan="2"><strong>Total:</strong></td>
+        <td><strong>₹{{ total|floatformat:2 }}</strong></td>
+      </tr>
+    </table>
+    <form method="POST" action="{% url 'payment' %}">
+      {% csrf_token %}
+      <button type="submit" class="btn checkout">Continue to payment</button>
+    </form>
+  {% else %}
+    <p>Your cart is empty.</p>
+    <a href="{% url 'index' %}" class="btn">Back to Shop</a>
+  {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'store/base.html' %}
+{% block title %}Login{% endblock %}
+{% block content %}
+  <section class="auth-form">
+    <h2>Login to Your Account</h2>
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="/" />
+      {{ form.as_p }}
+      <button type="submit" class="btn">Login</button>
+    </form>
+  </section>
+{% endblock %}
+

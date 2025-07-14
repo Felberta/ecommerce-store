@@ -1,0 +1,43 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<!-- Category Section -->
+<!-- Category Section -->
+<section class="category-section">
+  <h2 class="section-title">Categories</h2>
+  <div class="category-grid">
+    {% for category in categories %}
+      <div class="category-card">
+        <a href="{% url 'category_products' category.id %}">
+          <img src="{{ category.background_image.url }}" alt="{{ category.name }}">
+          <h3 class="category-name">{{ category.name }}</h3>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Divider -->
+<hr style="margin: 50px auto; width: 60px; border: 2px solid #4CAF50;" />
+
+<!-- About Section -->
+<section id="about" class="info-section">
+  <h2>About ShopEasy</h2>
+  <p>ShopEasy is your go-to online store for quality products in skincare, fashion, electronics, and more. We are committed to providing seamless shopping experiences with fast delivery and customer support.</p>
+</section>
+
+<!-- Divider -->
+<hr style="margin: 50px auto; width: 60px; border: 2px solid #4CAF50;" />
+
+<!-- Contact Section -->
+<section id="contact" class="info-section">
+  <h2>Contact Us</h2>
+  <p>Email: support@shopeasy.com</p>
+  <p>Phone: +91 98765 43210</p>
+  <p>Location: Chennai, India</p>
+</section>
+
+{% endblock %}

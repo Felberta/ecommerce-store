@@ -1,0 +1,61 @@
+{% extends 'store/base.html' %}
+{% block title %}Payment{% endblock %}
+
+{% block content %}
+<section class="payment">
+  <h2>Complete Your Payment</h2>
+  <p>Your total is ₹{{ total|floatformat:2 }}</p>
+
+  <form method="POST" id="payment-form">
+    {% csrf_token %}
+
+    <label><strong>Select Payment Method:</strong></label><br>
+    <input type="radio" name="payment_method" value="card" checked> Debit/Credit Card
+    <input type="radio" name="payment_method" value="upi"> GPay / PhonePe<br><br>
+
+    <div id="card-fields">
+      <label>Card Number:</label><br>
+      <input type="text" name="card_number" placeholder="1234 5678 9012 3456" required><br><br>
+
+      <label>Expiry Date:</label><br>
+      <input type="text" name="expiry" placeholder="MM/YY" required><br><br>
+
+      <label>CVV:</label><br>
+      <input type="text" name="cvv" placeholder="123" required><br><br>
+    </div>
+
+    <div id="upi-field" style="display:none;">
+      <label>Enter Phone Number:</label><br>
+      <input type="text" name="upi_number" placeholder="10-digit mobile number"><br><br>
+    </div>
+
+    {% if show_otp %}
+      <input type="hidden" name="confirmed" value="yes">
+      <div id="otp-section">
+        <label>Enter OTP sent to your mobile:</label><br>
+        <input type="text" name="otp" placeholder="6-digit OTP"><br><br>
+        <button type="submit" class="btn btn-success">Confirm Payment</button>
+      </div>
+    {% else %}
+      <button type="submit" class="btn btn-primary">Proceed to OTP</button>
+    {% endif %}
+  </form>
+</section>
+
+<script>
+  const cardFields = document.getElementById('card-fields');
+  const upiField = document.getElementById('upi-field');
+
+  document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      if (radio.value === 'card') {
+        cardFields.style.display = 'block';
+        upiField.style.display = 'none';
+      } else {
+        cardFields.style.display = 'none';
+        upiField.style.display = 'block';
+      }
+    });
+  });
+</script>
+{% endblock %}
